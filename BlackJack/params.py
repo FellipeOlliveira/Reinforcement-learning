@@ -1,6 +1,7 @@
 from typing import NamedTuple
 
 class Params(NamedTuple):
+    n_runs: int
     seed: int
     action_size: int
     state_size: tuple
