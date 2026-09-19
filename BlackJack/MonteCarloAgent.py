@@ -1,8 +1,5 @@
 import numpy as np
 
-
-from EpsilonGreedy import EpsilonGreedy
-
 class MonteCarlo:
     def __init__(self,env,state_size,action_size,seed,learning_rate,epsilon,gamma):
         self.env = env
@@ -13,11 +10,6 @@ class MonteCarlo:
         self.learning_rate = learning_rate
         self.epsilon = epsilon
         self.gamma = gamma
-
-        self.epsilongreedy = EpsilonGreedy(
-            seed=self.seed
-            ,epsilon=self.epsilon
-        )
 
         self.reset_qtable()
 
