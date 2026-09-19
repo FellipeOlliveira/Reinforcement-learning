@@ -23,7 +23,13 @@ class EpsilonGreedy:
 
         #Exploitation (Pega o melhor Q-value para esse estado
         else:
-            max_ids = np.where(qtable[state, :] == max(qtable[state, :]))[0]
+            q_values = qtable[state]
+
+            max_q = np.max(q_values)
+
+            max_ids = np.flatnonzero(q_values == max_q)
+
             action = self.rng.choice(max_ids)
+
 
         return action
