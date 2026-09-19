@@ -1,8 +1,3 @@
-from functools import total_ordering
-from typing import NamedTuple
-
-import numpy as np
-
 import gymnasium as gym
 
 from params import Params
@@ -10,7 +5,7 @@ from MonteCarloAgent import MonteCarlo
 from EpsilonGreedy import EpsilonGreedy
 
 params = Params(
-    n_runs=50
+    n_runs=500
     ,seed=666
     ,action_size=None
     ,state_size=None
@@ -19,8 +14,8 @@ params = Params(
     ,epsilon=0.1
     ,gamma=1
 
-    ,natural=False
-    ,sab=False
+    ,natural=True
+    ,sab=True
 )
 
 env = gym.make(
@@ -53,33 +48,27 @@ def run():
 
 
     for i in range(params.n_runs):
-        state = env.reset(seed=params.seed)[0]
+        state = env.reset()[0]
 
         terminated = False
         truncated = False
         episode = []
 
         while not (terminated or truncated):
+            env.render()
             action = policy.chose_action(
                 env.action_space
                 ,state
                 ,monte_carlo.qtable)
 
-            print(f"action = {action}")
-            print(f"type(action) = {type(action)}")
-            print(f"action_space = {env.action_space}")
-            print(f"contains = {env.action_space.contains(action)}")
-
             new_state , reward, terminated, truncated, info = env.step(action=action)
-            env.render()
+            
 
             episode.append((state ,action ,reward))
 
             state = new_state
 
-            print(f"reward:{reward}\ninfo:{info}\nnew_state:{new_state}")
-
         monte_carlo.train(qtable=monte_carlo.qtable,episode=episode)
     
-        print("End of Episode")
+        print("End of Episode {i}")
 run()
