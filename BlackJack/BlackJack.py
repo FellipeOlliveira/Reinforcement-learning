@@ -11,7 +11,7 @@ from EpsilonGreedy import EpsilonGreedy
 
 params = Params(
     n_runs=50
-    ,seed=100
+    ,seed=666
     ,action_size=None
     ,state_size=None
 
